@@ -141,6 +141,29 @@ println hisat2_index*/
 Define a fastqc for raw_reads function for pipeline
 --------------------------------------------------------------------------------
 */
+process GET_SOFTWARE_VERSION_FOR_RNAPIPE_ANALYSIS {
+
+   publishDir "${params.outdir}/pipeline_info", mode: 'copy'
+
+   output:
+   path ("*.txt"), emit: software_version
+   script:
+   """
+   echo $workflow.manifest.version > v_pipeline.txt
+   echo $workflow.nextflow.version > v_nextflow.txt
+   fastqc --version > v_fastqc.txt
+   echo \$(fastp --version 2>&1) > v_fastp.txt
+   hisat2 --version > v_hisat2.txt
+   samtools --version > v_samtools.txt
+   stringtie --version > v_stringtie.txt
+   echo \$(gffread --version 2>&1) > v_gffread.txt
+   echo \$(gffcompare --version 2>&1) > v_gffcompare.txt
+   salmon --version > v_salmon.txt
+   echo \$(R --version 2>&1) > v_R.txt
+   multiqc --version > v_multiqc.txt
+   """
+}
+
 process FASTQC_QUALITY_CHECK_FOR_RAW_READS {
     tag "$sample"
     publishDir "${params.outdir}/raw_fastqc_report", mode: 'copy'
@@ -924,6 +947,7 @@ workflow MULTIQC_REPORT_FOR_ALL_ANALYSIS_RESULTS {
 */
 
 workflow {
+    GET_SOFTWARE_VERSION_FOR_RNAPIPE_ANALYSIS (  )
 
     FASTQC_QUALITY_CHECK_AND_FASTP_READS_FILTER_FOR_RAW_READS ( raw_reads )
 
