@@ -1,0 +1,8 @@
+FROM nfcore/base
+LABEL maintainer="zhangdongqin2@126.com"
+LABEL authors="zhangdongqin2@126.com" \
+    description="Docker image containing all requirements for the RNApipe pipeline"
+
+COPY environment.yaml /
+RUN conda env create -f /environment.yaml && conda clean -a
+ENV PATH /opt/conda/envs/onestep_rnaseq/bin:$PATH
