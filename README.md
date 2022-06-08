@@ -7,7 +7,7 @@
 	```bash
 	curl -s https://get.nextflow.io | bash  OR INSTALL WITH CONDA : conda install nextflow 
 	```
-	-This pipeline is based one nextflow DSL2 , so you can run nextflow self-update to update NEXTFLOW to new version
+	-This pipeline is based on nextflow DSL2 , so you can run nextflow self-update to update NEXTFLOW to new version
 
 2. -STEP02:
 	-CONDA ENVIRONMENT DEPLOY:
